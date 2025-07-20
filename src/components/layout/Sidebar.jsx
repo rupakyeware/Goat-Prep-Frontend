@@ -1,10 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import { MAANG } from "../../constants/companies.js";
 import { useAuth } from "../../context/AuthContext.jsx";
+import AsyncSearchSelect from "../ui/common/AsyncSearchSelect.jsx";
+import { useEffect, useState } from "react";
+import { loadCompaniesForAsyncSearch } from "../../services/company/companyService.js";
 
 export default function Sidebar({filters, setFilters}) {
     const navigate = useNavigate();
     const { logout } = useAuth();
+    const [selectedCompany, setSelectedCompany] = useState(null);
+
+    useEffect(() => {
+        if(selectedCompany && selectedCompany.value) {
+            navigate("/company/" + selectedCompany.value);
+        }
+    },[selectedCompany])
 
     const handleButtonClick = () => {            
         navigate("/submit");
@@ -19,7 +29,7 @@ export default function Sidebar({filters, setFilters}) {
     }
 
     return (
-        <div className="min-h-screen text-white flex flex-col">
+        <div className="min-h-screen min-w-64 text-white flex flex-col">
             {/* Filters */}
             <div className="mb-4 bg-black p-2">
                 <h3 className="text-lg">Filter questions by</h3>
@@ -49,8 +59,13 @@ export default function Sidebar({filters, setFilters}) {
             </div>
             {/* MAANG questions */}
             <div className="bg-black p-2">
-                <h3 className="text-lg mb-2">Search questions in</h3>
-                <ul className="space-y-1">
+                <AsyncSearchSelect
+                    placeholder="Search for popular companies"
+                    value={selectedCompany}
+                    onChange={setSelectedCompany}
+                    loadOptions={loadCompaniesForAsyncSearch}
+                />
+                <ul className="space-y-1 text-left mt-2">
                     <li><a href={"/"}>All</a></li>
                     <li><a href={"/company/" + MAANG.Meta}>Meta</a></li>
                     <li><a href={"/company/" + MAANG.Apple}>Apple</a></li>

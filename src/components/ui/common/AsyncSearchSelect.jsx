@@ -10,7 +10,7 @@ export default function AsyncSearchSelect({
 }) {
     return (
         <div className="text-white w-full">
-            {label && <label className="block mb-1 text-left">{label}</label>}
+            {label && <label className="block mb-1">{label}</label>}
             <AsyncSelect
                 cacheOptions
                 loadOptions={loadOptions}

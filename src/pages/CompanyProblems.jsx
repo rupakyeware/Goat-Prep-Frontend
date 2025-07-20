@@ -19,7 +19,7 @@ export default function CompanyProblems() {
         }
         fetchCompany();
         setFilters(prev => ({...prev, companyId: companyId, page: 0}));
-    },[])
+    },[companyId])
 
     return (
         <div className="w-full text-white">
