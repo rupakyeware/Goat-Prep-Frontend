@@ -1,6 +1,10 @@
 import { useEffect } from "react";
+import { useUser } from "../../../context/UserContext";
 
 export default function ProblemRow({ problem }) {
+    const { solvedProblems, markProblemSolved } = useUser();
+    const isSolved = solvedProblems.some(p => p.problemId === problem.problemId);
+
     const getDifficultyColour = (level) => {
         switch (level) {
             case 0: return "text-problem-easy";
@@ -11,7 +15,13 @@ export default function ProblemRow({ problem }) {
 
     return (
         <tr className="text-normal border-t-border-gray text-sm">
-            <td>X</td>
+            <td>
+                <input
+                type="checkbox"
+                checked={isSolved}
+                onChange={() => markProblemSolved(problem)}
+                />
+            </td>
             <td>{problem.problemName}</td>
             <td className={`${getDifficultyColour(problem.problemDifficulty)}`}>
                 {problem.problemDifficulty === 0 ? "Easy" :

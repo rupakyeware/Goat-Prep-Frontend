@@ -37,3 +37,23 @@ export const getProblemsByName = async({
     const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/problems/search`, {params});
     return res.data;
 }
+
+export const getProblemsByCompanyId = async({
+    difficulty, 
+    minLookups, 
+    sortBy, 
+    order, 
+    page,
+    companyId
+} = {}) => {
+    const params = {};
+    if(difficulty !== undefined) params.difficulty = difficulty;
+    if(minLookups !== undefined) params.minLookups = minLookups;
+    params.sortBy = sortBy;
+    params.order = order;
+    params.page = page;
+    params.companyId = companyId;
+
+    const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/company/problems`, {params});
+    return res.data;
+}

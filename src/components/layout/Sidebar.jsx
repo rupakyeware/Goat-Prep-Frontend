@@ -1,4 +1,7 @@
+import { MAANG } from "../../constants/companies.js";
+
 export default function Sidebar({filters, setFilters}) {
+
     const handleDifficultyChange = (newDifficulty) => {
         setFilters(prev => ({...prev, difficulty: newDifficulty}));
     }
@@ -36,8 +39,18 @@ export default function Sidebar({filters, setFilters}) {
                     handleMinLookupsChange(e.target.value);
                 }}/>
             </div>
-            <div className="flex-grow bg-black p-2">
+            {/* MAANG questions */}
+            <div className="bg-black p-2">
                 <h3 className="text-lg mb-2">Search questions in</h3>
+                <ul className="space-y-1">
+                    <li><a href={"/"}>All</a></li>
+                    <li><a href={"/company/" + MAANG.Meta}>Meta</a></li>
+                    <li><a href={"/company/" + MAANG.Apple}>Apple</a></li>
+                    <li><a href={"/company/" + MAANG.Amazon}>Amazon</a></li>
+                    <li><a href={"/company/" + MAANG.Nvidia}>Nvidia</a></li>
+                    <li><a href={"/company/" + MAANG.Netflix}>Netflix</a></li>
+                    <li><a href={"/company/" + MAANG.Google}>Google</a></li>
+                </ul>
             </div>
         </div>
     )

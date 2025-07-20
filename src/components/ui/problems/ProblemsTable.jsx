@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getFilteredProblems, getProblemsByName } from "../../../services/problems/problemService";
+import { getFilteredProblems, getProblemsByCompanyId, getProblemsByName } from "../../../services/problems/problemService";
 import ProblemRow from "./ProblemRow";
 import SearchBar from "../common/SearchBar";
 import { FileText } from "react-bootstrap-icons";
@@ -8,15 +8,19 @@ export default function ProblemsTable({filters, setFilters}) {
     const [problems, setProblems] = useState([]);
 
     useEffect(() => {
-        console.log(filters);
         // Fetch problems data with filters (if any)
         const fetchData = async () => {
             try {
                 let data;
-                if(filters.name?.trim()) {
-                    data = await getProblemsByName({name: filters.name});
+                if(filters.companyId) {
+                    data = await getProblemsByCompanyId(filters);
                 }
-                else data = await getFilteredProblems(filters);
+                else {
+                    if(filters.name?.trim()) {
+                        data = await getProblemsByName({name: filters.name});
+                    }
+                    else data = await getFilteredProblems(filters);
+                }
                 setProblems(data);
             } catch (err) {
                 console.log(err);
@@ -30,6 +34,7 @@ export default function ProblemsTable({filters, setFilters}) {
         <div className="w-full">
             <div className="w-full mt-4 flex justify-between items-center">
                 <div>
+                    {/* Search for problems by name */}
                     <SearchBar value={filters.name ?? ""}
                     placeholder="Search for problems"
                     onChange={(e) => setFilters(prev => ({
@@ -37,6 +42,7 @@ export default function ProblemsTable({filters, setFilters}) {
                     }))}
                     />
                 </div>
+                {/* Navigate between pages of problems */}
                 <div className="flex justify-center items-center space-x-2">
                     <button
                     onClick={() => {setFilters(prev => ({...prev, page: Math.max(prev.page-1, 0)}))}}

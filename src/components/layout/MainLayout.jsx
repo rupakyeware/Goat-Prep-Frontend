@@ -7,7 +7,8 @@ export default function MainLayout() {
         difficulty: undefined,
         minLookups: undefined,
         page: 0,
-        name: ""
+        name: "",
+        companyId: undefined
     });
 
     return(

@@ -11,7 +11,6 @@ instance.interceptors.request.use((config)=> {
     const isAuthRoute = config.url.includes("/auth/login")  || config.url.includes("/auth/register");
     if(token && !isAuthRoute) {
         config.headers.Authorization = `Bearer ${token}`;
-        console.log(token);
     }
     return config;
 })
