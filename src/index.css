@@ -1,11 +1,15 @@
-@import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+@import "tailwindcss";
 
 @theme {
   /* colours */
   --color-primary: oklch(0.8399 0.1598 89.19);
-  --color-input: oklch(0.3829 0 0); 
-  --color-h1: oklch(0.8853 0 0);
+  --color-gray: oklch(0.3829 0 0); 
+  --color-normal: oklch(0.8853 0 0);
+  --color-table-heading: oklch(0.5032 0 0);
+  --color-problem-easy: oklch(0.7411 0.0754 185.83);
+  --color-problem-medium: oklch(0.8399 0.1598 89.19);
+  --color-problem-hard: oklch(0.6421 0.21456 37.0754);
 }
 
 :root {
@@ -33,10 +37,9 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  display: block;
+  width: 100vw;
+  height: 100vh;
 }
 
 h1 {

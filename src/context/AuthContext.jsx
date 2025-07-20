@@ -3,17 +3,11 @@ import { createContext, useContext, useEffect, useState } from "react";
 const AuthContext = createContext();
 
 export function AuthProvider({children}) {
+    // if the token has already been set, it will be initialized with it
+    // else token will be intialized with null
     const [token, setToken] = useState(() => {
         return localStorage.getItem("token");
     })
-
-    // when first loaded, check if token already exists in localStorage
-    // useEffect(() => {
-    //     const storedToken = localStorage.getItem("token");
-    //     if(storedToken) {
-    //         setToken(storedToken);
-    //     }
-    // },[])
 
     const login = (jwt) => {
         localStorage.setItem("token", jwt);

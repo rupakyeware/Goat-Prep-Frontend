@@ -1,5 +1,12 @@
+import { useOutletContext } from "react-router-dom";
+import ProblemsTable from "../components/ui/problems/ProblemsTable";
+
 export default function Home() {
+    const {filters, setFilters} = useOutletContext();
+
     return (
-        <div className="p-4 text-white">Main problems list</div>
+        <div className="text-white">
+            <ProblemsTable filters={filters} setFilters={setFilters}/>
+        </div>
     )
 }

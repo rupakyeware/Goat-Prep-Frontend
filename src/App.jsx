@@ -13,7 +13,6 @@ import Logout from './pages/Logout'
 import PrivateRoute from './routes/Privateroute'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <BrowserRouter>
