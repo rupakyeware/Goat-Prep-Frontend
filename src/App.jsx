@@ -11,6 +11,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Logout from './pages/Logout'
 import PrivateRoute from './routes/Privateroute'
+import SubmitInterviewExperience from './pages/SubmitInterviewExperience'
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/company/:companyId" element={<CompanyProblems />} />
+            <Route path="/submit" element={<SubmitInterviewExperience/>} />
             <Route path="/test-auth" element={<TestAuth />} />
           </Route>
         </Route>

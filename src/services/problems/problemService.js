@@ -57,3 +57,15 @@ export const getProblemsByCompanyId = async({
     const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/company/problems`, {params});
     return res.data;
 }
+
+export const loadProblemsForAsyncSearch = async(name) => {
+    if(!name) return [];
+    const params = {};
+    params.name = name;
+
+    const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/problems/search`, {params: { name }});
+    return res.data.map(p => ({
+        value: p.problemId,
+        label: p.problemName
+    }));
+}

@@ -1,6 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import { MAANG } from "../../constants/companies.js";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 export default function Sidebar({filters, setFilters}) {
+    const navigate = useNavigate();
+    const { logout } = useAuth();
+
+    const handleButtonClick = () => {            
+        navigate("/submit");
+    }
 
     const handleDifficultyChange = (newDifficulty) => {
         setFilters(prev => ({...prev, difficulty: newDifficulty}));
@@ -51,6 +59,14 @@ export default function Sidebar({filters, setFilters}) {
                     <li><a href={"/company/" + MAANG.Netflix}>Netflix</a></li>
                     <li><a href={"/company/" + MAANG.Google}>Google</a></li>
                 </ul>
+            </div>
+            <button onClick={handleButtonClick}>Submit Experience</button>
+            <div className="mt-auto p-2">
+                <button 
+                    onClick={logout} 
+                    className="w-full text-red-500 hover:bg-red-500 hover:text-white py-2 mt-4"                >
+                    Sign Out
+                </button>
             </div>
         </div>
     )
