@@ -24,7 +24,11 @@ export function UserProvider({children}) {
 
     const markProblemSolved = async(problem) => {
         try {
-            setSolvedProblems((prev) => [...prev, problem]);
+            setSolvedProblems((prev) => {
+                const exists = solvedProblems.find(p => p.problemId === problem.problemId);
+                if(exists) return prev.filter(p => p.problemId !== problem.problemId);
+                else return [...prev, problem];
+            });
             await handleProblemSolved(problem.problemId);
         } catch(err) {
             console.log("Error marking the problem as solved: " + err);

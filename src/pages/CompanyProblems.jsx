@@ -12,7 +12,6 @@ export default function CompanyProblems() {
         const fetchCompany = async() => {
             try {
                 const currentCompany = await getCompanyById(companyId);
-                console.log(currentCompany);
                 setCompany(currentCompany);
             } catch(err) {
                 console.log(err);
