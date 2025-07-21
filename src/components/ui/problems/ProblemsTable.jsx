@@ -4,6 +4,7 @@ import ProblemRow from "./ProblemRow";
 import SearchBar from "../common/SearchBar";
 import { FileText } from "react-bootstrap-icons";
 import { BiSearch } from "react-icons/bi";
+import { IoMdArrowDropleft, IoMdArrowDropleftCircle, IoMdArrowDropright, IoMdArrowDroprightCircle } from "react-icons/io";
 
 export default function ProblemsTable({ filters, setFilters }) {
     const [problems, setProblems] = useState([]);
@@ -60,7 +61,7 @@ export default function ProblemsTable({ filters, setFilters }) {
                                 }));
                             }}
                         >
-                            {"<"}
+                            <IoMdArrowDropleftCircle className="w-7 h-7"/>
                         </button>
                         <p>{filters.page + 1}</p>
                         <button
@@ -71,7 +72,7 @@ export default function ProblemsTable({ filters, setFilters }) {
                                 }));
                             }}
                         >
-                            {">"}
+                            <IoMdArrowDroprightCircle className="w-7 h-7"/>
                         </button>
                     </div>
                 </div>
