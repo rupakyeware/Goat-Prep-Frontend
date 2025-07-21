@@ -1,25 +1,25 @@
-import AsyncSelect from "react-select/async";
+import Select from "react-select";
 
-export default function AsyncSearchSelect({
+export default function SimpleSelect({
     loadOptions,
-    isMulti = false,
+    isMulti = false, 
     placeholder = "Search...",
-    onChange,
+    onChange, 
     value,
-    label
+    label,
+    ...rest // ⬅️ Catch all extra props
 }) {
-    console.log("inside slider. val: ", value);
     return (
         <div className="text-white w-full">
             {label && <label className="block mb-1">{label}</label>}
-            <AsyncSelect
-                cacheOptions
-                loadOptions={loadOptions}
-                defaultOptions
+            <Select
+                options={loadOptions}
+                defaultValue={loadOptions[0]}
                 isMulti={isMulti}
                 placeholder={placeholder}
                 onChange={onChange}
                 value={value}
+                {...(rest.onMenuOpen ? { onMenuOpen: rest.onMenuOpen } : {})} // ⬅️ Conditionally forward
                 styles={{
                     control: (base) => ({
                         ...base,
@@ -31,14 +31,13 @@ export default function AsyncSearchSelect({
                     menu: (base) => ({
                         ...base,
                         backgroundColor: "#1f1f1f",
-                        color: "#E7E7E7",
+                        color: "#fff",
                         textAlign: "left"
-
                     }),
                     option: (base, state) => ({
                         ...base,
                         backgroundColor: state.isFocused ? "#333" : "#1f1f1f",
-                        color: "#E7E7E7",
+                        color: "#fff",
                     }),
                     singleValue: (base) => ({
                         ...base,
@@ -47,11 +46,11 @@ export default function AsyncSearchSelect({
                     multiValue: (base) => ({
                         ...base,
                         backgroundColor: "#333",
-                        color: "#E7E7E7",
+                        color: "#fff",
                     }),
                     multiValueLabel: (base) => ({
                         ...base,
-                        color: "#E7E7E7",
+                        color: "#fff",
                     }),
                     multiValueRemove: (base) => ({
                         ...base,
@@ -73,5 +72,5 @@ export default function AsyncSearchSelect({
                 })}
             />
         </div>
-    );
+    )
 }

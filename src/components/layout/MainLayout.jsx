@@ -16,7 +16,7 @@ export default function MainLayout() {
             <aside className="">
                 <Sidebar filters={filters} setFilters={setFilters}/>
             </aside>
-            <main className="flex-1 overflow-auto">
+            <main className="flex-1 overflow-auto px-4 py-8">
                 <Outlet context={{filters, setFilters}}/>
             </main>
         </div>
