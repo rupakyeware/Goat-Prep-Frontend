@@ -76,22 +76,17 @@ export default function ProblemsTable({ filters, setFilters }) {
                     </div>
                 </div>
             </div>
-            <table className="w-full text-left border-collapse mt-4">
-                <thead className="text-sm text-">
-                    <tr>
-                        <th>Status</th>
-                        <th>Problem</th>
-                        <th>Difficulty</th>
-                        <th>Count</th>
-                        <th>Solve</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {problems.map((problem) => (
-                        <ProblemRow key={problem.problemId} problem={problem} />
-                    ))}
-                </tbody>
-            </table>
+            <div className="mt-4 mb-1 grid grid-cols-[1fr_10fr_2fr_2fr] w-full text-light-heading text-sm text-left px-2 py-1">
+                <div>Status</div>
+                <div>Problem</div>
+                <div>Difficulty</div>
+                <div>Times Asked</div>
+            </div>
+            <div>
+                {problems.map((problem) => (
+                    <ProblemRow key={problem.problemId} problem={problem} />
+                ))}
+            </div>
         </div>
     )
 }

@@ -51,7 +51,7 @@ export default function Sidebar({ filters, setFilters }) {
                     onChange={handleDifficultyChange}
                 />
                 {/* Min Lookups Filter */}
-                <p className="text-left text-sm text-light-heading mt-2 mb-1">Times Asked</p>
+                <p className="text-left text-sm text-light-heading mt-3">Times Asked</p>
                 <div className="px-2">
                     <RangeSlider
                         min={0}
@@ -69,27 +69,27 @@ export default function Sidebar({ filters, setFilters }) {
                     onChange={setSelectedCompany}
                     loadOptions={loadCompaniesForAsyncSearch}
                 />
-                <ul className="text-left mt-2 space-y-1">
-                    <li className="hover:bg-slate py-1 px-1 rounded-md">
-                        <a href={"/"} className="block w-full text-white">All</a>
+                <ul className="text-left mt-2 space-y-1 text-light-heading">
+                    <li className="hover:bg-slate py-1 px-2 rounded-md">
+                        <a href={"/"} className="block w-full hover:text-white">All</a>
                     </li>
-                    <li className="hover:bg-slate py-1 px-1 rounded-md">
-                        <a href={"/company/" + MAANG.Meta} className="block w-full text-white">Meta</a>
+                    <li className="hover:bg-slate py-1 px-2 rounded-md">
+                        <a href={"/company/" + MAANG.Meta} className="block w-full hover:text-white">Meta</a>
                     </li>
-                    <li className="hover:bg-slate py-1 px-1 rounded-md">
-                        <a href={"/company/" + MAANG.Apple} className="block w-full text-white">Apple</a>
+                    <li className="hover:bg-slate py-1 px-2 rounded-md">
+                        <a href={"/company/" + MAANG.Apple} className="block w-full hover:text-white">Apple</a>
                     </li>
-                    <li className="hover:bg-slate py-1 px-1 rounded-md">
-                        <a href={"/company/" + MAANG.Amazon} className="block w-full text-white">Amazon</a>
+                    <li className="hover:bg-slate py-1 px-2 rounded-md">
+                        <a href={"/company/" + MAANG.Amazon} className="block w-full hover:text-white">Amazon</a>
                     </li>
-                    <li className="hover:bg-slate py-1 px-1 rounded-md">
-                        <a href={"/company/" + MAANG.Nvidia} className="block w-full text-white">Nvidia</a>
+                    <li className="hover:bg-slate py-1 px-2 rounded-md">
+                        <a href={"/company/" + MAANG.Nvidia} className="block w-full hover:text-white">Nvidia</a>
                     </li>
-                    <li className="hover:bg-slate py-1 px-1 rounded-md">
-                        <a href={"/company/" + MAANG.Netflix} className="block w-full text-white">Netflix</a>
+                    <li className="hover:bg-slate py-1 px-2 rounded-md">
+                        <a href={"/company/" + MAANG.Netflix} className="block w-full hover:text-white">Netflix</a>
                     </li>
-                    <li className="hover:bg-slate py-1 px-1 rounded-md">
-                        <a href={"/company/" + MAANG.Google} className="block w-full text-white">Google</a>
+                    <li className="hover:bg-slate py-1 px-2 rounded-md">
+                        <a href={"/company/" + MAANG.Google} className="block w-full hover:text-white">Google</a>
                     </li>
                 </ul>
             </div>

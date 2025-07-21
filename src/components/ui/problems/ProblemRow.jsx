@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { useUser } from "../../../context/UserContext";
+import { SiLeetcode } from "react-icons/si";
 
 export default function ProblemRow({ problem }) {
     const { solvedProblems, markProblemSolved } = useUser();
     const isSolved = solvedProblems.some(p => p.problemId === problem.problemId);
+
 
     const getDifficultyColour = (level) => {
         switch (level) {
@@ -14,28 +16,28 @@ export default function ProblemRow({ problem }) {
     };
 
     return (
-        <tr className="text-normal border-t-border-gray text-sm">
-            <td>
+        <>
+            <div className="grid grid-cols-[1fr_10fr_2fr_2fr] w-full text-md text-left hover:bg-slate px-2 py-1 items-center"
+            onClick={() => {
+                window.open(problem.problemUrl, "_blank");
+            }}
+            >
                 <input
-                type="checkbox"
-                checked={isSolved}
-                onChange={() => markProblemSolved(problem)}
+                    type="checkbox"
+                    className="w-4 h-4"
+                    checked={isSolved}
+                    onChange={() => markProblemSolved(problem)}
                 />
-            </td>
-            <td>{problem.problemName}</td>
-            <td className={`${getDifficultyColour(problem.problemDifficulty)}`}>
-                {problem.problemDifficulty === 0 ? "Easy" :
-                 problem.problemDifficulty === 1 ? "Medium" :
-                 problem.problemDifficulty === 2 ? "Hard" : "Unknown"}
-            </td>
-            <td>{problem.problemLookups}</td>
-            <td>
-                <a
-                    href={problem.problemUrl}
-                    className="text-blue-400 underline">
-                    Solve
-                </a>
-            </td>
-        </tr>
+                <div className="truncate">{problem.problemName}</div>
+                <div className={`${getDifficultyColour(problem.problemDifficulty)}`}>
+                    {problem.problemDifficulty === 0 ? "Easy" :
+                        problem.problemDifficulty === 1 ? "Medium" :
+                            problem.problemDifficulty === 2 ? "Hard" : "Unknown"}
+                </div>
+                <div>
+                    {problem.problemLookups}
+                </div>
+            </div>
+        </>
     )
 }
