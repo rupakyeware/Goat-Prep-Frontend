@@ -4,84 +4,108 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import AsyncSearchSelect from "../ui/common/AsyncSearchSelect.jsx";
 import { useEffect, useState } from "react";
 import { loadCompaniesForAsyncSearch } from "../../services/company/companyService.js";
+import SimpleSelect from "../ui/common/SimpleSelect.jsx";
+import RangeSlider from "../ui/common/RangeSlider.jsx";
+import SimpleButton from "../ui/common/SimpleButton.jsx";
 
-export default function Sidebar({filters, setFilters}) {
+export default function Sidebar({ filters, setFilters }) {
     const navigate = useNavigate();
     const { logout } = useAuth();
     const [selectedCompany, setSelectedCompany] = useState(null);
 
+    const difficultyOptions = [
+        { value: "", label: "All" },
+        { value: "0", label: "Easy" },
+        { value: "1", label: "Medium" },
+        { value: "2", label: "Hard" },
+    ]
+
     useEffect(() => {
-        if(selectedCompany && selectedCompany.value) {
+        if (selectedCompany && selectedCompany.value) {
             navigate("/company/" + selectedCompany.value);
         }
-    },[selectedCompany])
+    }, [selectedCompany])
 
-    const handleButtonClick = () => {            
+    const handleButtonClick = () => {
         navigate("/submit");
     }
 
     const handleDifficultyChange = (newDifficulty) => {
-        setFilters(prev => ({...prev, difficulty: newDifficulty}));
+        setFilters(prev => ({ ...prev, difficulty: newDifficulty.value }));
     }
 
     const handleMinLookupsChange = (newMinLookups) => {
-        setFilters(prev=> ({...prev, minLookups: newMinLookups}));
+        setFilters(prev => ({ ...prev, minLookups: newMinLookups }));
     }
 
     return (
-        <div className="min-h-screen min-w-64 text-white flex flex-col">
+        <div className="min-h-screen w-85 text-white flex flex-col px-4 py-12">
             {/* Filters */}
-            <div className="mb-4 bg-black p-2">
-                <h3 className="text-lg">Filter questions by</h3>
+            <div className="mb-4 bg-sidebar-main border border-solid border-slate px-3 py-6 rounded-md">
+                <h3 className="text-xl text-left text-light-heading">Filters</h3>
                 {/* Difficulty Filter */}
-                <p className="text-left mt-2">Difficulty</p>
-                <select 
-                className="w-full" 
-                value={filters.difficulty ?? ""} 
-                onChange={(e) => {
-                    handleDifficultyChange(e.target.value)
-                }}>
-                    <option value="">All</option>
-                    <option value="0">Easy</option>
-                    <option value="1">Medium</option>
-                    <option value="2">Hard</option>
-                </select>
+                <p className="text-left text-sm text-light-heading mt-2 mb-1">Difficulty</p>
+                <SimpleSelect
+                    loadOptions={difficultyOptions}
+                    placeholder="All"
+                    onChange={handleDifficultyChange}
+                />
                 {/* Min Lookups Filter */}
-                <p className="text-left mt-2">Times Asked</p>
-                <input 
-                className="w-full"
-                type="number" 
-                placeholder="All" 
-                value={filters.minLookups ?? ""} 
-                onChange={(e) => {
-                    handleMinLookupsChange(e.target.value);
-                }}/>
+                <p className="text-left text-sm text-light-heading mt-3">Times Asked</p>
+                <div className="px-2">
+                    <RangeSlider
+                        min={0}
+                        max={1000}
+                        value={filters.minLookups}
+                        onChange={(val) => setFilters(prev => ({ ...prev, minLookups: val }))}
+                    />
+                </div>
             </div>
             {/* MAANG questions */}
-            <div className="bg-black p-2">
+            <div className="bg-sidebar-main border border-solid border-slate px-3 py-6 rounded-md">
                 <AsyncSearchSelect
                     placeholder="Search for popular companies"
                     value={selectedCompany}
                     onChange={setSelectedCompany}
                     loadOptions={loadCompaniesForAsyncSearch}
                 />
-                <ul className="space-y-1 text-left mt-2">
-                    <li><a href={"/"}>All</a></li>
-                    <li><a href={"/company/" + MAANG.Meta}>Meta</a></li>
-                    <li><a href={"/company/" + MAANG.Apple}>Apple</a></li>
-                    <li><a href={"/company/" + MAANG.Amazon}>Amazon</a></li>
-                    <li><a href={"/company/" + MAANG.Nvidia}>Nvidia</a></li>
-                    <li><a href={"/company/" + MAANG.Netflix}>Netflix</a></li>
-                    <li><a href={"/company/" + MAANG.Google}>Google</a></li>
+                <ul className="text-left mt-2 space-y-1 text-light-heading">
+                    <li className="hover:bg-slate py-1 px-2 rounded-md">
+                        <a href={"/"} className="block w-full hover:text-white">All</a>
+                    </li>
+                    <li className="hover:bg-slate py-1 px-2 rounded-md">
+                        <a href={"/company/" + MAANG.Meta} className="block w-full hover:text-white">Meta</a>
+                    </li>
+                    <li className="hover:bg-slate py-1 px-2 rounded-md">
+                        <a href={"/company/" + MAANG.Apple} className="block w-full hover:text-white">Apple</a>
+                    </li>
+                    <li className="hover:bg-slate py-1 px-2 rounded-md">
+                        <a href={"/company/" + MAANG.Amazon} className="block w-full hover:text-white">Amazon</a>
+                    </li>
+                    <li className="hover:bg-slate py-1 px-2 rounded-md">
+                        <a href={"/company/" + MAANG.Nvidia} className="block w-full hover:text-white">Nvidia</a>
+                    </li>
+                    <li className="hover:bg-slate py-1 px-2 rounded-md">
+                        <a href={"/company/" + MAANG.Netflix} className="block w-full hover:text-white">Netflix</a>
+                    </li>
+                    <li className="hover:bg-slate py-1 px-2 rounded-md">
+                        <a href={"/company/" + MAANG.Google} className="block w-full hover:text-white">Google</a>
+                    </li>
                 </ul>
             </div>
-            <button onClick={handleButtonClick}>Submit Experience</button>
-            <div className="mt-auto p-2">
-                <button 
-                    onClick={logout} 
-                    className="w-full text-red-500 hover:bg-red-500 hover:text-white py-2 mt-4"                >
-                    Sign Out
-                </button>
+            <div className="mt-4">
+                <SimpleButton
+                    onClick={handleButtonClick}
+                    text="Submit Experience"
+                    className="w-full text-white border border-[0.5px] border-yellow hover:bg-yellow hover:text-black py-2 rounded-md"
+                />
+            </div>
+            <div className="mt-auto">
+                <SimpleButton
+                    onClick={logout}
+                    text="Sign Out"
+                    className="w-full text-white border border-[0.5px] border-red-500 hover:bg-red-500 hover:text-white py-2 rounded-md"
+                />
             </div>
         </div>
     )
