@@ -68,6 +68,7 @@ export default function ProblemsTable({ filters, setFilters }) {
                                     page: Math.max(prev.page - 1, 0),
                                 }));
                             }}
+                            className="hover:text-yellow"
                         >
                             <IoMdArrowDropleftCircle className="w-7 h-7" />
                         </button>
@@ -80,7 +81,7 @@ export default function ProblemsTable({ filters, setFilters }) {
                                     page: prev.page + 1,
                                 }));
                             }}
-                            className={problems.length === 0 ? "text-slate" : ""}
+                            className={problems.length === 0 ? "text-slate cursor-not-allowed" : "hover:text-yellow"}
                         >
                             <IoMdArrowDroprightCircle className="w-7 h-7" />
                         </button>

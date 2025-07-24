@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../services/auth/authService";
+import GoogleLogin from "../components/ui/common/GoogleLogin";
 
 export default function Login() {
     const [username, setUsername] = useState("");
@@ -40,7 +41,8 @@ export default function Login() {
                 />
                 {error && <p className="text-red-400 text-sm">{error}</p>}
                 <button type="submit" className="w-full bg-primary text-black py-3 px-6 rounded-md font-">Login</button>
-                <p className="w-full text-right mt-2">Dont have an account? <span className="text-yellow font-semibold"><a href="/register">Register</a></span></p>
+                <GoogleLogin className="mt-4"/>
+                <p className="w-full text-right">Dont have an account? <span className="text-yellow font-semibold"><a href="/register">Register</a></span></p>
             </form>
         </div>
     )

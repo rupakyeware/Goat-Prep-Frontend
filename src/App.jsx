@@ -12,6 +12,7 @@ import Register from './pages/Register'
 import Logout from './pages/Logout'
 import PrivateRoute from './routes/Privateroute'
 import SubmitInterviewExperience from './pages/SubmitInterviewExperience'
+import OAuthLogin from './pages/OAuthLogin'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/logout' element={<Logout />} />
+        <Route path='/oauth/callback' element={<OAuthLogin />}/>
         <Route element={<PrivateRoute />} >
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />

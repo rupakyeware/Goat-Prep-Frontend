@@ -15,6 +15,7 @@
   --color-problem-hard: oklch(0.6421 0.21456 37.0754);
   --color-sidebar-main: oklch(0.2435 0 0);
   --color-yellow: oklch(0.8399 0.1598 89.19);
+  --color-turqoise: oklch(0.7449 0.1047 180.18);
 }
 
 :root {

@@ -21,12 +21,12 @@ export default function ProblemRow({ problem }) {
     return (
         <>
             <div className="grid grid-cols-[1fr_10fr_2fr_2fr] w-full text-md text-left hover:bg-slate px-2 py-1 items-center cursor-pointer">
-                <input
-                    type="checkbox"
-                    className="w-4 h-4"
-                    checked={isSolved}
-                    onChange={() => markProblemSolved(problem)}
-                />
+                <div
+                    onClick={() => markProblemSolved(problem)}
+                    className={`w-3 h-3 border rounded-sm cursor-pointer ${
+                        isSolved ? 'bg-turqoise border-turqoise' : 'bg-gray border-gray'
+                    }`}
+                ></div>
                 <div className="truncate hover:text-yellow"
                     onClick={() => {
                         window.open(problem.problemUrl, "_blank");
