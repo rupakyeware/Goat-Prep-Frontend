@@ -17,7 +17,7 @@ export default function Login() {
             login(data); // store the token in AuthContext and localStorage
             navigate("/");
         } catch (error) {
-            if(error.response?.status === 401) setError("Invalid username or password");
+            if (error.response?.status === 401) setError("Invalid username or password");
             else setError("Something went wrong");
         }
     }
@@ -40,6 +40,7 @@ export default function Login() {
                 />
                 {error && <p className="text-red-400 text-sm">{error}</p>}
                 <button type="submit" className="w-full bg-primary text-black py-3 px-6 rounded-md font-">Login</button>
+                <p className="w-full text-right mt-2">Dont have an account? <span className="text-yellow font-semibold"><a href="/register">Register</a></span></p>
             </form>
         </div>
     )

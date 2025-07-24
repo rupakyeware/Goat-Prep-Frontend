@@ -8,7 +8,6 @@ export default function AsyncSearchSelect({
     value,
     label
 }) {
-    console.log("inside slider. val: ", value);
     return (
         <div className="text-white w-full">
             {label && <label className="block mb-1">{label}</label>}
@@ -27,6 +26,12 @@ export default function AsyncSearchSelect({
                         borderColor: "#333",
                         color: "#E7E7E7",
                         textAlign: "left"
+                    }),
+                    input: (base) => ({
+                        ...base,
+                        '[type="text"]':{
+                            color: 'white !important'
+                        }
                     }),
                     menu: (base) => ({
                         ...base,

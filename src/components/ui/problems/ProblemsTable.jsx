@@ -5,14 +5,18 @@ import SearchBar from "../common/SearchBar";
 import { FileText } from "react-bootstrap-icons";
 import { BiSearch } from "react-icons/bi";
 import { IoMdArrowDropleft, IoMdArrowDropleftCircle, IoMdArrowDropright, IoMdArrowDroprightCircle } from "react-icons/io";
+import { useUser } from "../../../context/UserContext";
 
 export default function ProblemsTable({ filters, setFilters }) {
     const [problems, setProblems] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const { solvedProblems, markProblemSolved } = useUser();
 
     useEffect(() => {
         // Fetch problems data with filters (if any)
         const fetchData = async () => {
             try {
+                setLoading(true);
                 let data;
                 if (filters.companyId) {
                     data = await getProblemsByCompanyId(filters);
@@ -21,11 +25,15 @@ export default function ProblemsTable({ filters, setFilters }) {
                     if (filters.name?.trim()) {
                         data = await getProblemsByName({ name: filters.name });
                     }
-                    else data = await getFilteredProblems(filters);
+                    else {
+                        data = await getFilteredProblems(filters);
+                    }
                 }
                 setProblems(data);
             } catch (err) {
                 console.log(err);
+            } finally {
+                setLoading(false);
             }
         }
         fetchData();
@@ -61,18 +69,20 @@ export default function ProblemsTable({ filters, setFilters }) {
                                 }));
                             }}
                         >
-                            <IoMdArrowDropleftCircle className="w-7 h-7"/>
+                            <IoMdArrowDropleftCircle className="w-7 h-7" />
                         </button>
                         <p>{filters.page + 1}</p>
                         <button
+                            disabled={problems.length === 0}
                             onClick={() => {
                                 setFilters((prev) => ({
                                     ...prev,
                                     page: prev.page + 1,
                                 }));
                             }}
+                            className={problems.length === 0 ? "text-slate" : ""}
                         >
-                            <IoMdArrowDroprightCircle className="w-7 h-7"/>
+                            <IoMdArrowDroprightCircle className="w-7 h-7" />
                         </button>
                     </div>
                 </div>
@@ -83,11 +93,15 @@ export default function ProblemsTable({ filters, setFilters }) {
                 <div>Difficulty</div>
                 <div>Times Asked</div>
             </div>
-            <div>
-                {problems.map((problem) => (
-                    <ProblemRow key={problem.problemId} problem={problem} />
-                ))}
-            </div>
+            {loading ? (
+                <p className="text-gray text-center mt-4">Loading...</p>
+            ) : problems.length === 0 ? (
+                <p className="text-gray text-center mt-4">Nothing to see here</p>
+            ) : (
+                problems.map((problem) => (
+                    <ProblemRow key={`${problem.problemId}-${solvedProblems.length}`} problem={problem} />
+                ))
+            )}
         </div>
     )
 }

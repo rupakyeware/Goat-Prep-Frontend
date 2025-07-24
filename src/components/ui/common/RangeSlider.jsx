@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+import debounce from "lodash/debounce";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 
@@ -10,6 +12,7 @@ export default function RangeSlider({
     step = 1,
     className = ""
 }) {
+
     return (
         <div className="flex items-center gap-2 w-full">
             <Slider
