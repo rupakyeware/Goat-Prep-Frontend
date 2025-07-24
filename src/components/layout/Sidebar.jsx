@@ -2,7 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { MAANG } from "../../constants/companies.js";
 import { useAuth } from "../../context/AuthContext.jsx";
 import AsyncSearchSelect from "../ui/common/AsyncSearchSelect.jsx";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import debounce from "lodash/debounce";
 import { loadCompaniesForAsyncSearch } from "../../services/company/companyService.js";
 import SimpleSelect from "../ui/common/SimpleSelect.jsx";
 import RangeSlider from "../ui/common/RangeSlider.jsx";
@@ -12,6 +13,8 @@ export default function Sidebar({ filters, setFilters }) {
     const navigate = useNavigate();
     const { logout } = useAuth();
     const [selectedCompany, setSelectedCompany] = useState(null);
+
+    const [sliderValue, setSliderValue] = useState(0);
 
     const difficultyOptions = [
         { value: "", label: "All" },
@@ -38,6 +41,14 @@ export default function Sidebar({ filters, setFilters }) {
         setFilters(prev => ({ ...prev, minLookups: newMinLookups }));
     }
 
+    const debouncedOnChange = useMemo(() => debounce((val) => {
+        setFilters(prev => ({ ...prev, minLookups: val }));
+    }, 200), []);
+
+    useEffect(() => {
+        debouncedOnChange(sliderValue);
+    },[sliderValue])
+
     return (
         <div className="min-h-screen w-85 text-white flex flex-col px-4 py-12">
             {/* Filters */}
@@ -56,8 +67,8 @@ export default function Sidebar({ filters, setFilters }) {
                     <RangeSlider
                         min={0}
                         max={1000}
-                        value={filters.minLookups}
-                        onChange={(val) => setFilters(prev => ({ ...prev, minLookups: val }))}
+                        value={sliderValue}
+                        onChange={setSliderValue}
                     />
                 </div>
             </div>
@@ -109,4 +120,10 @@ export default function Sidebar({ filters, setFilters }) {
             </div>
         </div>
     )
+}
+
+if (import.meta.hot) {
+    import.meta.hot.dispose(() => {
+        debouncedOnChange.cancel?.();
+    });
 }

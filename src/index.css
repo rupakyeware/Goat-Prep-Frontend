@@ -3,6 +3,7 @@
 
 @theme {
   /* colours */
+  --color-background: oklch(0.2178 0 0);
   --color-primary: oklch(0.8399 0.1598 89.19);
   --color-gray: oklch(0.3829 0 0); 
   --color-light-heading: oklch(0.7952 0 0);
@@ -31,6 +32,7 @@
 }
 
 body {
+  @apply bg-background;
   margin: 0;
   display: block;
   width: 100vw;

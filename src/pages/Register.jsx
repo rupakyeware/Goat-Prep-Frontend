@@ -14,7 +14,7 @@ export default function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            if(password !== confirmPassword) throw new Error("Passwords do not match");
+            if (password !== confirmPassword) throw new Error("Passwords do not match");
             const data = await registerUser(username, password); // get the jwt token on login
             login(data); // store the token in AuthContext and localStorage
             console.log(data);
@@ -48,6 +48,8 @@ export default function Register() {
                 />
                 {error && <p className="text-red-400 text-sm">{error}</p>}
                 <button type="submit" className="w-full bg-primary text-black py-3 px-6 rounded-md font-">Create Account</button>
+                <p className="w-full text-right mt-2">Already have an account? <span className="text-yellow font-semibold"><a href="/login">Log In</a></span></p>
+
             </form>
         </div>
     )

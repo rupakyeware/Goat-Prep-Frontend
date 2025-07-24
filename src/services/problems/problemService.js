@@ -14,8 +14,12 @@ export const getFilteredProblems = async({
     params.order = order;
     params.page = page;
 
-    const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/problems`, {params});
-    return res.data;
+    try {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/problems`, {params});
+        return res.data;
+    } catch(error) {
+        console.log("Server returned error: " + error.message);
+    }
 }
 
 export const getProblemsByName = async({
