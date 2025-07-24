@@ -1,5 +1,0 @@
-name = "goat-prep-frontend"
-compatibility_date = "2025-07-24"
-
-[site]
-bucket = "./dist"
