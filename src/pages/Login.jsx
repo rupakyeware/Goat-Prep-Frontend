@@ -26,24 +26,24 @@ export default function Login() {
     return (
         <div className="min-h-screen w-full flex items-center justify-center font-h2">
             <form onSubmit={handleSubmit} className="p-4 rounded-md w-80 space-y-4">
-                <p className="text-3xl text-md text-left text-normal font-bold">Sign In</p>
+                <p className="text-3xl text-md text-center text-normal font-bold">Sign in</p>
 
                 <input type="text"
-                    placeholder="enter username"
-                    className="w-full px-6 py-3 bg-gray rounded-md"
+                    placeholder="Username"
+                    className="w-full px-6 py-3 bg-gray rounded-md text-center"
                     onChange={(e) => setUsername(e.target.value)}
                     required
                 />
                 <input type="password"
-                    placeholder="enter password"
-                    className="w-full px-6 py-3 bg-gray rounded-md"
+                    placeholder="Password"
+                    className="w-full px-6 py-3 bg-gray rounded-md text-center"
                     onChange={(e) => setPassword(e.target.value)}
                     requireds
                 />
                 {error && <p className="text-red-400 text-sm">{error}</p>}
-                <button type="submit" className="w-full bg-primary text-black py-3 px-6 rounded-md font-">Login</button>
+                <button type="submit" className="w-full bg-primary text-black py-3 px-6 rounded-md text-center">Login</button>
                 <GoogleLogin className="mt-4"/>
-                <p className="w-full text-right">Dont have an account? <span className="text-yellow font-semibold"><a href="/register">Register</a></span></p>
+                <p className="w-full text-center">Don't have an account? <span className="text-yellow font-semibold"><a href="/register">Register</a></span></p>
             </form>
         </div>
     )
