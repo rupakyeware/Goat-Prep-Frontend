@@ -3,16 +3,19 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../services/auth/authService";
 import GoogleLogin from "../components/ui/common/GoogleLogin";
+import PrimaryButton from "../components/ui/common/PrimaryButton";
 
 export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const { login } = useAuth();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             const data = await loginUser(username, password); // get the jwt token on login
             login(data); // store the token in AuthContext and localStorage
@@ -20,6 +23,8 @@ export default function Login() {
         } catch (error) {
             if (error.response?.status === 401) setError("Invalid username or password");
             else setError("Something went wrong");
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -38,10 +43,10 @@ export default function Login() {
                     placeholder="Password"
                     className="w-full px-6 py-3 bg-gray rounded-md text-center"
                     onChange={(e) => setPassword(e.target.value)}
-                    requireds
+                    required
                 />
                 {error && <p className="text-red-400 text-sm">{error}</p>}
-                <button type="submit" className="w-full bg-primary text-black py-3 px-6 rounded-md text-center">Login</button>
+                <PrimaryButton type="submit" disabled={loading}>Login</PrimaryButton>
                 <GoogleLogin className="mt-4"/>
                 <p className="w-full text-center">Don't have an account? <span className="text-yellow font-semibold"><a href="/register">Register</a></span></p>
             </form>
