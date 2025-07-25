@@ -27,7 +27,7 @@ export default function Register() {
     return (
         <div className="min-h-screen w-full flex items-center justify-center font-h2">
             <form onSubmit={handleSubmit} className="p-4 rounded-md w-80 space-y-4">
-                <h1 className="text-md text-left text-normal font-bold">Sign Up</h1>
+                <p className=" text-3xl text-md text-left text-normal font-bold">Sign Up</p>
                 <input type="text"
                     placeholder="enter username"
                     className="w-full px-6 py-3 bg-gray rounded-md"

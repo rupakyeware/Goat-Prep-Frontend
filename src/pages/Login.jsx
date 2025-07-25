@@ -26,7 +26,7 @@ export default function Login() {
     return (
         <div className="min-h-screen w-full flex items-center justify-center font-h2">
             <form onSubmit={handleSubmit} className="p-4 rounded-md w-80 space-y-4">
-                <h1 className="text-md text-left text-normal font-bold">Sign In</h1>
+                <p className="text-3xl text-md text-left text-normal font-bold">Sign In</p>
 
                 <input type="text"
                     placeholder="enter username"
@@ -38,7 +38,7 @@ export default function Login() {
                     placeholder="enter password"
                     className="w-full px-6 py-3 bg-gray rounded-md"
                     onChange={(e) => setPassword(e.target.value)}
-                    required
+                    requireds
                 />
                 {error && <p className="text-red-400 text-sm">{error}</p>}
                 <button type="submit" className="w-full bg-primary text-black py-3 px-6 rounded-md font-">Login</button>
