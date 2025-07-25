@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getFilteredProblems, getProblemsByCompanyId, getProblemsByName } from "../../../services/problems/problemService";
 import ProblemRow from "./ProblemRow";
-import SearchBar from "../common/SearchBar";
+import SearchBar from "../common/TextInput";
 import { FileText } from "react-bootstrap-icons";
 import { BiSearch } from "react-icons/bi";
 import { IoMdArrowDropleft, IoMdArrowDropleftCircle, IoMdArrowDropright, IoMdArrowDroprightCircle } from "react-icons/io";
@@ -15,7 +15,7 @@ export default function ProblemsTable({ filters, setFilters }) {
     useEffect(() => {
         // Fetch problems data with filters (if any)
         const fetchData = async () => {
-            try {
+            try { 
                 setLoading(true);
                 let data;
                 if (filters.companyId) {
