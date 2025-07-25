@@ -18,7 +18,6 @@ export default function Register() {
             if (password !== confirmPassword) throw new Error("Passwords do not match");
             const data = await registerUser(username, password); // get the jwt token on login
             login(data); // store the token in AuthContext and localStorage
-            console.log(data);
             navigate("/");
         } catch (error) {
             setError("Invalid credentials");

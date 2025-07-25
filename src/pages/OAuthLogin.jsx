@@ -10,13 +10,11 @@ export default function OAuthLogin() {
 
     useEffect(() => {
         const jwt = searchParams.get("token");
-        console.log("jwt for this user: ", jwt);
         if(jwt) {
             login(jwt);
             navigate("/");
         }
         else {
-            console.log("unauthorized");
             navigate("/login");
         }
     },[])
