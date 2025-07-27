@@ -27,9 +27,9 @@ function App() {
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/company/:companyId" element={<CompanyProblems />} />
-            <Route path="/submit" element={<SubmitInterviewExperience/>} />
             <Route path="/test-auth" element={<TestAuth />} />
           </Route>
+          <Route path="/submit" element={<SubmitInterviewExperience/>} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -23,7 +23,7 @@ export default function CompanyProblems() {
 
     return (
         <div className="w-full text-white">
-            <h1 className="w-full text-left">{company?.companyName}</h1>
+            <h1 className="w-full text-3xl text-left">{company?.companyName}</h1>
             <ProblemsTable filters={filters} setFilters={setFilters}/>
         </div>
     )

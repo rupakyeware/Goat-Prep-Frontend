@@ -9,3 +9,8 @@ export const registerUser = async(username, password) => {
     const res = await axios.post("/public/auth/register", {username, password});
     return res.data;
 }
+
+export const verifyUser = async() => {
+    const res = await axios.get("/public/auth/verify");
+    return res;
+}

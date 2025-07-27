@@ -7,6 +7,14 @@ const UserContext = createContext();
 export function UserProvider({children}) {
     const { token } = useAuth();
     const [solvedProblems, setSolvedProblems] = useState([]);
+    const [filters, setFilters] = useState({
+        difficulty: undefined,
+        minLookups: undefined,
+        page: 0,
+        name: "",
+        companyId: undefined,
+        companyName: undefined
+    });
 
     useEffect(() => {
         const fetchSolved = async() => {
@@ -36,7 +44,7 @@ export function UserProvider({children}) {
     }
 
     return (
-        <UserContext.Provider value={{solvedProblems, markProblemSolved}}>
+        <UserContext.Provider value={{solvedProblems, markProblemSolved, filters, setFilters}}>
             {children}
         </UserContext.Provider>
     )

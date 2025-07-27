@@ -7,12 +7,13 @@ import { BiSearch } from "react-icons/bi";
 import { IoMdArrowDropleft, IoMdArrowDropleftCircle, IoMdArrowDropright, IoMdArrowDroprightCircle } from "react-icons/io";
 import { useUser } from "../../../context/UserContext";
 
-export default function ProblemsTable({ filters, setFilters }) {
+export default function ProblemsTable() {
     const [problems, setProblems] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { solvedProblems, markProblemSolved } = useUser();
+    const { solvedProblems, markProblemSolved, filters, setFilters } = useUser();
 
     useEffect(() => {
+        console.log(JSON.stringify(filters));
         // Fetch problems data with filters (if any)
         const fetchData = async () => {
             try { 
@@ -37,7 +38,7 @@ export default function ProblemsTable({ filters, setFilters }) {
             }
         }
         fetchData();
-    }, [JSON.stringify(filters)]);
+    }, [filters]);
     // To compare actual values of filters and not references, I used stringify
 
     return (
@@ -59,7 +60,9 @@ export default function ProblemsTable({ filters, setFilters }) {
                                 }
                             />
                         </div>
-                    ) : <div className="flex-1" />}
+                    ) : <div className="flex">
+                            <p className="text-white text-3xl">{filters.companyName}</p>
+                        </div>}
                     <div className="flex items-center space-x-2">
                         <button
                             onClick={() => {

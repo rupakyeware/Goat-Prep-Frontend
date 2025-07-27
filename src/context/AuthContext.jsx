@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { verifyUser } from "../services/auth/authService";
 
 const AuthContext = createContext();
 
@@ -19,8 +20,18 @@ export function AuthProvider({children}) {
         setToken(null);
     }
 
+    const verify = async() => {
+        try {
+            const res = await verifyUser();
+            if(res.status !== 200) throw new Error("Invalid or expired token");
+        } catch(err) {
+            localStorage.removeItem("token");
+            setToken(null);
+        }
+    }
+
     return(
-        <AuthContext.Provider value={{token, login, logout, isAuthenticated: !!token}}>
+        <AuthContext.Provider value={{token, login, logout, verify, isAuthenticated: !!token}}>
             {children}
         </AuthContext.Provider>
     )

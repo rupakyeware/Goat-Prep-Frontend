@@ -8,9 +8,13 @@ export const getCompanyById = async(companyId) => {
 export const loadCompaniesForAsyncSearch = async(name) => {
     if(!name || name.trim() === "") return [];
 
-    const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/company`, {params:{ name }});
-    return res.data.map(c => ({
-        value: c.companyId,
-        label: c.companyName
-    }));
+    try {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/company/search`, {params:{ name }});
+        return res.data.map(c => ({
+            value: c.companyId,
+            label: c.companyName
+        }));
+    } catch(err) {
+        console.log(err.message);
+    }
 }

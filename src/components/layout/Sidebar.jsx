@@ -8,12 +8,13 @@ import { loadCompaniesForAsyncSearch } from "../../services/company/companyServi
 import SimpleSelect from "../ui/common/SimpleSelect.jsx";
 import RangeSlider from "../ui/common/RangeSlider.jsx";
 import SimpleButton from "../ui/common/SimpleButton.jsx";
+import { useUser } from "../../context/UserContext.jsx";
+import { filter } from "lodash";
 
-export default function Sidebar({ filters, setFilters }) {
+export default function Sidebar() {
     const navigate = useNavigate();
     const { logout } = useAuth();
-    const [selectedCompany, setSelectedCompany] = useState(null);
-
+    const { filters, setFilters } = useUser();
     const [sliderValue, setSliderValue] = useState(0);
 
     const difficultyOptions = [
@@ -23,31 +24,38 @@ export default function Sidebar({ filters, setFilters }) {
         { value: "2", label: "Hard" },
     ]
 
-    useEffect(() => {
-        if (selectedCompany && selectedCompany.value) {
-            navigate("/company/" + selectedCompany.value);
-        }
-    }, [selectedCompany])
-
     const handleButtonClick = () => {
         navigate("/submit");
     }
 
     const handleDifficultyChange = (newDifficulty) => {
-        setFilters(prev => ({ ...prev, difficulty: newDifficulty.value }));
+        setFilters(prev => ({
+            ...prev,
+            difficulty: newDifficulty.value,
+            page: 0
+        }));
     }
 
     const handleMinLookupsChange = (newMinLookups) => {
-        setFilters(prev => ({ ...prev, minLookups: newMinLookups }));
+        setFilters(prev => ({
+            ...prev,
+            minLookups: newMinLookups,
+            page: 0
+        }));
     }
 
     const debouncedOnChange = useMemo(() => debounce((val) => {
-        setFilters(prev => ({ ...prev, minLookups: val }));
+        setFilters(prev => ({
+            ...prev,
+            minLookups: val,
+            page: 0
+
+        }));
     }, 200), []);
 
     useEffect(() => {
         debouncedOnChange(sliderValue);
-    },[sliderValue])
+    }, [sliderValue])
 
     return (
         <div className="min-h-screen w-85 text-white flex flex-col px-4 py-12">
@@ -76,32 +84,43 @@ export default function Sidebar({ filters, setFilters }) {
             <div className="bg-sidebar-main border border-solid border-slate px-3 py-6 rounded-md">
                 <AsyncSearchSelect
                     placeholder="Search for popular companies"
-                    value={selectedCompany}
-                    onChange={setSelectedCompany}
+                    value={filters.companyName !== undefined ? filters.companyName : ""}
+                    onChange={(val) => {
+                        setFilters((prev => ({
+                            ...prev,
+                            companyName: val?.label,
+                            companyId: val?.value
+                        })))
+                    }}
                     loadOptions={loadCompaniesForAsyncSearch}
                 />
                 <ul className="text-left mt-2 space-y-1 text-light-heading">
-                    <li className="hover:bg-slate py-1 px-2 rounded-md">
-                        <a href={"/"} className="block w-full hover:text-white">All</a>
-                    </li>
-                    <li className="hover:bg-slate py-1 px-2 rounded-md">
-                        <a href={"/company/" + MAANG.Meta} className="block w-full hover:text-white">Meta</a>
-                    </li>
-                    <li className="hover:bg-slate py-1 px-2 rounded-md">
-                        <a href={"/company/" + MAANG.Apple} className="block w-full hover:text-white">Apple</a>
-                    </li>
-                    <li className="hover:bg-slate py-1 px-2 rounded-md">
-                        <a href={"/company/" + MAANG.Amazon} className="block w-full hover:text-white">Amazon</a>
-                    </li>
-                    <li className="hover:bg-slate py-1 px-2 rounded-md">
-                        <a href={"/company/" + MAANG.Nvidia} className="block w-full hover:text-white">Nvidia</a>
-                    </li>
-                    <li className="hover:bg-slate py-1 px-2 rounded-md">
-                        <a href={"/company/" + MAANG.Netflix} className="block w-full hover:text-white">Netflix</a>
-                    </li>
-                    <li className="hover:bg-slate py-1 px-2 rounded-md">
-                        <a href={"/company/" + MAANG.Google} className="block w-full hover:text-white">Google</a>
-                    </li>
+                        <li className="hover:bg-slate hover:cursor-pointer py-1 px-2 rounded-md"
+                        onClick={() => {
+                            setFilters((prev) => ({
+                                ...prev,
+                                companyName: undefined,
+                                companyId: undefined,
+                                page: 0
+                            }))
+                        }}
+                        >
+                            All
+                        </li>
+                    {Object.keys(MAANG).map((companyName) => (
+                        <li className="hover:bg-slate hover:cursor-pointer py-1 px-2 rounded-md"
+                        onClick={() => {
+                            setFilters((prev) => ({
+                                ...prev,
+                                companyName: companyName,
+                                companyId: MAANG[companyName],
+                                page: 0
+                            }))
+                        }}
+                        >
+                            {companyName}
+                        </li>
+                    ))}
                 </ul>
             </div>
             <div className="mt-4">

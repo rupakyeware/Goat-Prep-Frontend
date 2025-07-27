@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { loginUser } from "../services/auth/authService";
 import GoogleLogin from "../components/ui/common/GoogleLogin";
 import PrimaryButton from "../components/ui/common/PrimaryButton";
+import AuthErrorBox from "../components/ui/common/AuthErrorBox";
 
 export default function Login() {
     const [username, setUsername] = useState("");
@@ -21,7 +22,8 @@ export default function Login() {
             login(data); // store the token in AuthContext and localStorage
             navigate("/");
         } catch (error) {
-            if (error.response?.status === 401) setError("Invalid username or password");
+            console.log(error);
+            if (error.response && error.response.status === 401) setError("Invalid username or password");
             else setError("Something went wrong");
         } finally {
             setLoading(false);
@@ -30,9 +32,9 @@ export default function Login() {
 
     return (
         <div className="min-h-screen w-full flex items-center justify-center font-h2">
-            <form onSubmit={handleSubmit} className="p-4 rounded-md w-80 space-y-4">
+            <form onSubmit={handleSubmit} className="p-4 rounded-md w-100 space-y-4">
+                {error && <AuthErrorBox message={error}/>}
                 <p className="text-3xl text-md text-center text-normal font-bold">Sign in</p>
-
                 <input type="text"
                     placeholder="Username"
                     className="w-full px-6 py-3 bg-gray rounded-md text-center"
@@ -45,7 +47,6 @@ export default function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-                {error && <p className="text-red-400 text-sm">{error}</p>}
                 <PrimaryButton type="submit" disabled={loading}>Login</PrimaryButton>
                 <GoogleLogin className="mt-4"/>
                 <p className="w-full text-center">Don't have an account? <span className="text-yellow font-semibold"><a href="/register">Register</a></span></p>
